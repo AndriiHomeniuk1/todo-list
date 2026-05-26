@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-10 ms-5">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+            <h4>Tag table</h4>
+            <a href="{% url 'todo:tag-create' %}" class="btn btn-primary mb-2">
+              <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Tag
+            </a>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0 ps-2">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Update</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for tag in tags %}
+                    <tr>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0 text-truncate">{{ tag.name }}</p>
+                      </td>
+                      <td>
+                        <a href="{% url 'todo:tag-update' tag.pk %}" class="btn btn-outline-primary btn-sm">
+                          <i class="fas fa-edit me-1"></i> Update
+                        </a>
+                      </td>
+                      <td>
+                        <a href="{% url 'todo:tag-delete' tag.pk %}" class="btn btn-outline-danger btn-sm">
+                          <i class="fas fa-trash-alt me-1"></i> Delete
+                        </a>
+                      </td>
+                    </tr>
+                  {% empty %}
+                    <tr>
+                      <td colspan="3" class="text-muted">No tags yet.</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

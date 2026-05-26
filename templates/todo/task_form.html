@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12 col-md-8 mx-auto">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            {% if form.instance.pk %}
+              <i class="fas fa-edit me-2"></i> Update Task
+            {% else %}
+              <i class="fas fa-plus me-2"></i> Create Task
+            {% endif %}
+          </h4>
+          <small class="text-light">Fill in the details below</small>
+        </div>
+
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+
+            <!-- Content -->
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              {{ form.content|add_class:"form-control" }}
+              {% for error in form.content.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Deadline -->
+            <div class="mb-3">
+              <label class="form-label">Deadline</label>
+              {{ form.deadline|add_class:"form-control" }}
+              {% for error in form.deadline.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-3">
+              <label class="form-label">Tags</label>
+              <div class="row">
+                {% for checkbox in form.tags %}
+                  <div class="col-6 col-md-3 mb-2">
+                    <div class="border rounded p-2 h-100">
+                      <div class="form-check d-flex align-items-center">
+                        {{ checkbox.tag }}
+                        <label class="form-check-label ms-2">
+                          {{ checkbox.choice_label }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              {% for error in form.tags.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <a href="{% url 'todo:index' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Cancel
+              </a>
+              <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %}
+                  <i class="fas fa-save me-2"></i> Update Task
+                {% else %}
+                  <i class="fas fa-plus me-2"></i> Create Task
+                {% endif %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

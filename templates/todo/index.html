@@ -33,13 +33,19 @@
                 </div>
                 <div>
                   {% if task.is_completed %}
-                    <a href="{% url 'todo:toggle-task' task.pk %}" class="btn btn-secondary btn-sm">
-                      <i class="fas fa-undo me-1"></i> Undo
-                    </a>
+                    <form action="{% url 'todo:toggle-task' task.pk %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-undo me-1"></i> Undo
+                      </button>
+                    </form>
                   {% else %}
-                    <a href="{% url 'todo:toggle-task' task.pk %}" class="btn btn-success btn-sm">
-                      <i class="fas fa-check me-1"></i> Complete
-                    </a>
+                    <form action="{% url 'todo:toggle-task' task.pk %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fas fa-check me-1"></i> Complete
+                      </button>
+                    </form>
                   {% endif %}
                 </div>
               </div>

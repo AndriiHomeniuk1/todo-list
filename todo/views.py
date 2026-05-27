@@ -1,7 +1,8 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
+from django.views.generic.detail import SingleObjectMixin
 
 from todo.forms import TaskForm
 from todo.models import Tag, Task
@@ -73,8 +74,11 @@ class TaskDeleteView(generic.DeleteView):
         return context
 
 
-def toggle_task(request, pk):
-    task = get_object_or_404(Task, pk=pk)
-    task.is_completed = not task.is_completed
-    task.save()
-    return redirect("todo:index")
+class ToggleTaskView(SingleObjectMixin, View):
+    model = Task
+
+    def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.is_completed = not task.is_completed
+        task.save()
+        return redirect("todo:index")

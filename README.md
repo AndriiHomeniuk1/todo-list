@@ -71,6 +71,16 @@ Open your browser and go to [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
+### Running Tests
+
+```bash
+python manage.py test
+```
+
+Tests cover models, forms, views.
+
+---
+
 ## Screenshots
 
 ![Index](docs/screenshots/index.jpg)
